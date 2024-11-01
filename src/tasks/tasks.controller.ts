@@ -1,8 +1,10 @@
 import { Controller, Delete, Get, Patch, Post, Put, Body, Query, Param, UsePipes, ValidationPipe } from "@nestjs/common";
 import { TaskServices } from "./tasks.service";
 import { CreateTaskDto } from "./dto/create-task.dto";
+import { ApiTags, ApiOperation, ApiResponse } from "@nestjs/swagger";
 
 @Controller('/tasks')
+@ApiTags('Taks')
 export class TaskController {
     tasksService: TaskServices; //crear una instancia de taskServices
 
@@ -11,6 +13,8 @@ export class TaskController {
     }
 
     @Get() // <----- Aquí iría la ruta pero no se define porque es una ruta común definida en el controller
+    @ApiOperation({summary: 'Get a list of all tasks'})
+    @ApiResponse({ status: 200, description: 'Not forbidden. ñ.ñ'})
     getAllTasks(@Query() query:any){
         //Podemos buscar en una DB
         //Podemos obtener datos de una API 

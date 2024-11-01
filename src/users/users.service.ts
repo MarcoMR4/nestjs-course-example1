@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
+import { PrismaService } from './prisma.service';
 
 export interface User {
     name: String,
@@ -8,6 +9,8 @@ export interface User {
 
 @Injectable()
 export class UsersService {
+
+    constructor(private prisma: PrismaService){}
 
     getTasks(): User {
         return {
@@ -30,13 +33,10 @@ export class UsersService {
     ]
 
     getUsers(){
-        return this.users;
+        return this.prisma.user.findMany();
     }
 
     createUser(user: CreateUserDto){
-        return {
-            ...user,
-            id: this.users.length+1
-        }
+        return this.prisma.user.create({data:user});
     }
 }
